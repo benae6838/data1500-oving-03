@@ -50,10 +50,17 @@ function Get-TrimmedOutput {
     }
     
     if ($Output -is [array] -and $Output.Count -gt 0) {
-        return ([string]$Output[0]).Trim()
+        $result = ([string]$Output[0]).Trim()
+    } else {
+        $result = ([string]$Output).Trim()
     }
     
-    return ([string]$Output).Trim()
+    # Extract only numeric value (remove timestamps and other text)
+    if ($result -match '\d+') {
+        return $matches[0]
+    }
+    
+    return $result
 }
 
 # Start
@@ -136,6 +143,12 @@ try {
     $output = docker-compose exec -T postgres psql -U admin -d data1500_db -t -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public'" 2>&1
     $tables = Get-TrimmedOutput $output
     
+    # Ensure we have a valid number
+    if (-not [int]::TryParse($tables, [ref]$null)) {
+        Write-Error "Kunne ikke parse tabeller-antall: $tables"
+        exit 1
+    }
+    
     if ([int]$tables -gt 0) {
         Write-Success "Tabeller funnet: $tables"
     } else {
@@ -159,6 +172,12 @@ try {
     $emneOutput = docker-compose exec -T postgres psql -U admin -d data1500_db -t -c "SELECT COUNT(*) FROM emner" 2>&1
     $emneCount = Get-TrimmedOutput $emneOutput
     
+    # Ensure we have valid numbers
+    if (-not ([int]::TryParse($studentCount, [ref]$null) -and [int]::TryParse($programCount, [ref]$null) -and [int]::TryParse($emneCount, [ref]$null))) {
+        Write-Error "Kunne ikke parse data-antall: Studenter=$studentCount, Programmer=$programCount, Emner=$emneCount"
+        exit 1
+    }
+    
     if ([int]$studentCount -gt 0 -and [int]$programCount -gt 0 -and [int]$emneCount -gt 0) {
         Write-Success "Testdata lastet inn"
         Write-Host "  - Studenter: $studentCount"
@@ -178,6 +197,12 @@ Write-Info "`nTest 9: Verifiser roller"
 try {
     $rolesOutput = docker-compose exec -T postgres psql -U admin -d data1500_db -t -c "SELECT COUNT(*) FROM pg_roles WHERE rolname IN ('admin_role', 'foreleser_role', 'student_role')" 2>&1
     $roles = Get-TrimmedOutput $rolesOutput
+    
+    # Ensure we have a valid number
+    if (-not [int]::TryParse($roles, [ref]$null)) {
+        Write-Error "Kunne ikke parse roller-antall: $roles"
+        exit 1
+    }
     
     if ([int]$roles -eq 3) {
         Write-Success "Alle roller opprettet"
