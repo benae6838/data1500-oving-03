@@ -10,8 +10,7 @@ Skriv dine svar på refleksjonsspørsmålene fra hver oppgave her.
 
 **Ditt svar:**
 
-[Skriv ditt svar her]
-
+Med Docker kan man kjøre PostgreSQL i en isolert container, uten å installere databasen direkte på maskinen. Dette gjør det da enklere å sette opp og kjøre databaseoppsettet på ulike maskiner.
 ---
 
 ### Spørsmål 2: Hva betyr "persistent volum" i docker-compose.yml? Hvorfor er det viktig?
