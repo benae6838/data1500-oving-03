@@ -1,4 +1,4 @@
-# Oppgave 2: SQL-spørringer og databaseskjema
+SELE# Oppgave 2: SQL-spørringer og databaseskjema
 
 ## Læringsmål
 
