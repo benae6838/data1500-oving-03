@@ -45,41 +45,32 @@ Man kan dele filen gjennom for eksempel github. Men man må passe på å ikke in
 ### Spørsmål 1: Hva er forskjellen mellom INNER JOIN og LEFT JOIN? Når bruker du hver av dem?
 
 **Ditt svar:**
-
-[Skriv ditt svar her]
-
+INNER JOIN brukes når man vil hente rader som finnes i begge tabeller. Hvis første tabell ikke har en match med den andre tabellen, vil den ikke hentes. For eksempel vil man finne kun studenter som har et program, og ikke vise de studentene som ikke har et program.
+LEFT JOIN henter rader fra begge tabellene uansett om det ikke er en match i den andre tabellen. Da vil de kolonnene i andre tabell være NULL. Som i første eksempel så ville man da hentet alle studenter, selv om de ikke var skrevet opp i programmer enda.
 ---
 
 ### Spørsmål 2: Hvorfor bruker vi fremmednøkler? Hva skjer hvis du prøver å slette et program som har studenter?
 
 **Ditt svar:**
-
-[Skriv ditt svar her]
-
+Vi bruker fremmed nøkler for å kunne koble en rad i en tabell til en rad i en annen tabell. Slik henger tabellene sammen. Hvis man prøver å slette en tabell msom har fremmednøkkel vil ikke databasen tilate dette.
 ---
 
 ### Spørsmål 3: Forklar hva `GROUP BY` gjør og hvorfor det er nødvendig når du bruker aggregatfunksjoner.
 
 **Ditt svar:**
-
-[Skriv ditt svar her]
-
+GROUP BY brukes til å samle rader i grupper basert på én eller flere kolonner. Det er nødvendig når man bruker aggregatfunksjoner, fordi funksjonene da beregnes per gruppe i stedet for for hele tabellen. Uten GROUP BY ville for eksempel SUM() eller AVG() regnet ut ett tall for alle radene samlet, i stedet for per kategori, som for eksempel per student.
 ---
 
 ### Spørsmål 4: Hva er en indeks og hvorfor er den viktig for ytelse?
 
 **Ditt svar:**
-
-[Skriv ditt svar her]
-
+En indeks er en datastruktur som gjør det raskere å finne rader i en tabell. Den er viktig for ytelse fordi databasen slipper å lete gjennom alle radene i tabellen når man søker, sorterer eller kobler tabeller, noe som sparer mye tid i store databaser.
 ---
 
 ### Spørsmål 5: Hvordan ville du optimalisert en spørring som er veldig treg?
 
 **Ditt svar:**
-
-[Skriv ditt svar her]
-
+For å optimalisere en treg spørring bør man hente kun nødvendige kolonner, filtrere rader med WHERE, bruke indekser på kolonner som søkes eller joines.
 ---
 
 ## Oppgave 3: Brukeradministrasjon og GRANT
